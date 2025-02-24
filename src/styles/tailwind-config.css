@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+    --color-dark: #df222a;
+    --color-light: #df222a;
+
+    --font-heading: Nexa, sans-serif;
+    --font-body: Montserrat, sans-serif;
+}

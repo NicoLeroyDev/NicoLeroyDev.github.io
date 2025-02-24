@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+import profilePicture from '../assets/nicolas-leroy-pro.jpg'
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div class="min-h-screen flex flex-col items-center justify-center p-4">
+    <Image src={profilePicture} class="w-64 h-64 rounded-full object-cover mb-8" alt="" />
+    <h1 class="text-3xl font-bold text-gray-800">
+        {t('home.greeting')}
+    </h1>
+</div>
