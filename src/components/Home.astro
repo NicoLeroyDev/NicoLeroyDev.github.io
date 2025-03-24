@@ -9,8 +9,8 @@ const t = useTranslations(lang);
 ---
 
 <div class="min-h-screen flex flex-col items-center justify-center p-4">
-    <Image src={profilePicture} class="w-64 h-64 rounded-full object-cover mb-8" alt="" />
+    <Image src={ profilePicture } class="w-64 h-64 rounded-full object-cover mb-8" alt={ t('home.profilePic') } />
     <h1 class="text-3xl font-bold text-gray-800">
-        {t('home.greeting')}
+        { t('home.greeting') }
     </h1>
 </div>

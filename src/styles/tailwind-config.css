@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-    --color-dark: #df222a;
-    --color-light: #df222a;
+    --color-dark: #0c0d0d;
+    --color-light: #f6f6ed;
+    --color-blue: #4cc8ed;
+    --color-yellow: #fed126;
+    --color-pink: #e24ca6;
 
     --font-heading: Nexa, sans-serif;
     --font-body: Montserrat, sans-serif;

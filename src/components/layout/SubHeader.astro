@@ -1,0 +1,9 @@
+---
+import LanguagePicker from './LanguagePicker.astro';
+import DarkModeToggle from './DarkModeToggle.vue';
+---
+
+<aside class="flex justify-end pt-2 px-8">
+    <LanguagePicker currentLang="fr" />
+    <DarkModeToggle client:load />
+</aside>

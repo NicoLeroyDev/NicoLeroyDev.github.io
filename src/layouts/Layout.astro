@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css';
 
+import Footer from '../components/layout/Footer.astro';
+import Header from '../components/layout/Header.astro';
+import SubHeader from '../components/layout/SubHeader.astro';
+
 import { getLangFromUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -21,7 +25,18 @@ const lang = getLangFromUrl(Astro.url);
 		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;500;600;700;900&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<slot />
+		<div class="app-layout transition-colors duration-200 ease-in-out">
+			<div class="wrapper flex bg-white dark:bg-black transition-colors duration-200 ease-in-out">
+				<Header />
+				<div class="main-wrapper flex flex-col w-full min-h-[100vh] lg:pl-[115px] transition-all duration-200 ease-in-out">
+					<SubHeader />
+					<main id="site-main" class="site-main">
+						<slot />
+					</main>
+					<Footer />
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 

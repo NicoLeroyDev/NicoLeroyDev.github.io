@@ -1,13 +1,13 @@
 ---
-import "../styles/global.css";
-import { languages } from '../i18n/ui';
-import { useTranslatedPath } from '../i18n/utils';
+import '../../styles/global.css';
+import { languages } from '../../i18n/ui';
+import { useTranslatedPath } from '../../i18n/utils';
 
 const { currentLang } = Astro.props;
 const translatePath = useTranslatedPath(currentLang);
 ---
 
-<ul class="language-picker fixed top-4 right-4 flex">
+<ul class="flex">
     {Object.entries(languages).map(([lang, label]) => (
         <li>
             <a
@@ -25,7 +25,7 @@ const translatePath = useTranslatedPath(currentLang);
 </ul>
 
 <style>
-    @reference "../styles/tailwind-config.css";
+    @reference "../../styles/tailwind-config.css";
 
     .active {
         @apply font-bold;
@@ -42,10 +42,8 @@ const translatePath = useTranslatedPath(currentLang);
     }
 
     a {
-
         &:hover,
         &:focus {
-
             &::after {
                 @apply opacity-100;
             }
