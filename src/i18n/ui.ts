@@ -13,6 +13,8 @@ export const ui = {
         'nav.portfolio': 'Portfolio',
         'nav.cv': 'CV',
         'nav.contact': 'Contact',
+        'home.pageTitle': 'Bienvenue sur mon portfolio !',
+        'home.subtitle': 'Consultez mes travaux, découvrez mon profil, puis entrons en contact !',
         'home.greeting': 'Bonjour, je m\'appelle Nicolas',
         'home.profilePic': 'Photo de profil de Nicolas Leroy',
     },
@@ -22,6 +24,8 @@ export const ui = {
         'nav.portfolio': 'Portfolio',
         'nav.cv': 'CV',
         'nav.contact': 'Contact',
+        'home.pageTitle': 'Welcome to my portfolio!',
+        'home.subtitle': 'Have a look at my work, discover my profile and let\'s get in touch!',
         'home.greeting': 'Hello, my name is Nicolas',
         'home.profilePic': 'Profile picture of Nicolas Leroy',
     }
