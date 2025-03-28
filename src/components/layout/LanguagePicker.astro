@@ -1,24 +1,23 @@
 ---
-import '../../styles/global.css';
-import { languages } from '../../i18n/ui';
-import { useTranslatedPath } from '../../i18n/utils';
+import { languages } from '@i18n/ui';
+import { useTranslatedPath, getLangFromUrl } from '@i18n/utils';
 
-const { currentLang } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
 ---
 
 <ul class="flex">
-    {Object.entries(languages).map(([lang, label]) => (
+    {Object.entries(languages).map(([lang]) => (
         <li>
             <a
-                href={translatePath('/', lang)}
-                class={`flex relative p-4 uppercase text-xs dark:text-light transition-colors duration-200 ease-in-out ${
+                href={ translatePath('/', lang) }
+                class={ `flex relative p-4 uppercase text-xs dark:text-light transition-colors duration-200 ease-in-out ${
                     currentLang === lang
                         ? 'active'
                         : ''
-                }`}
+                }` }
             >
-                {lang}
+                { lang }
             </a>
         </li>
     ))}

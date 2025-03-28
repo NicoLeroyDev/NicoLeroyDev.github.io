@@ -1,0 +1,73 @@
+---
+import SvgDefs from '@components/icons/SvgDefs.vue';
+---
+
+<div class="dark-mode-toggler-wrapper ml-2">
+  <button type="button"
+          class="js-dark-theme-toggle-button
+          button-toggler flex h-full w-[48px] text-dark border border-solid border-dark cursor-pointer
+          transition-colors duration-200 ease-in-out
+          dark:text-light dark:border-light"
+  >
+    <SvgDefs class="js-dark-theme-toggle-icon-moon m-auto" width="14" height="14" id="moon" />
+    <SvgDefs class="js-dark-theme-toggle-icon-sun m-auto" width="14" height="14" id="sun" />
+  </button>
+</div>
+
+<style>
+  @reference "../../styles/tailwind-config.css";
+
+  .button-toggler {
+    &:hover,
+    &:focus {
+      @apply bg-dark text-white dark:bg-light dark:text-dark;
+    }
+  }
+</style>
+
+<script is:inline>
+  const theme = (() => {
+    const localStorageTheme = localStorage?.getItem('nl-pf-darkmode') ?? '';
+
+    if (['dark', 'light'].includes(localStorageTheme)) {
+      return localStorageTheme;
+    }
+
+    return 'light';
+  })();
+
+  if (theme === 'light') {
+    document.documentElement.classList.remove('dark');
+  } else {
+    document.documentElement.classList.add('dark');
+  }
+
+  window.localStorage.setItem('nl-pf-darkmode', theme);
+
+  const updateIcon = (isDark) => {
+    const iconSun = document.querySelector('.js-dark-theme-toggle-icon-sun');
+    const iconMoon = document.querySelector('.js-dark-theme-toggle-icon-moon');
+
+    if (isDark) {
+      iconSun.classList.remove('hidden');
+      iconMoon.classList.add('hidden');
+    } else {
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+  }
+
+  updateIcon(theme === 'dark');
+
+  const handleToggleClick = () => {
+    const element = document.documentElement;
+    element.classList.toggle('dark');
+
+    const isDark = element.classList.contains('dark');
+    localStorage.setItem('nl-pf-darkmode', isDark ? 'dark' : 'light');
+
+    updateIcon(isDark);
+  }
+
+  document.querySelector('.js-dark-theme-toggle-button')?.addEventListener('click', handleToggleClick);
+</script>

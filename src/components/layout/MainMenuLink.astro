@@ -1,0 +1,54 @@
+---
+import SvgDefs from '@components/icons/SvgDefs.vue';
+
+const { id, href } = Astro.props;
+---
+
+<a class="menu-link mx-auto uppercase text-xs text-dark dark:text-light transition-colors duration-200 ease-out" href={ href }>
+    <div class="icon">
+        <SvgDefs width="20"
+                 height="20"
+                 class="text-dark dark:text-light mx-auto transition-colors duration-200 ease-out"
+                 id={ id }
+        />
+    </div>
+    <slot />
+</a>
+
+<style>
+    @reference "../../styles/tailwind-config.css";
+
+    .icon {
+        @apply flex mx-auto w-8 mb-2;
+
+        svg {
+            @apply m-auto;
+        }
+    }
+
+    .menu-link {
+        &::before {
+            content: "";
+            border-width: 5px 0 5px 5px;
+            border-color: transparent;
+            @apply absolute w-0 h-0 -left-2 bottom-[5px] border-solid transition-colors duration-200 ease-in-out;
+        }
+
+        &::after {
+            content: "";
+            border-width: 5px 5px 5px 0;
+            border-color: transparent;
+            @apply absolute w-0 h-0 -right-2 bottom-[5px] border-solid transition-colors duration-200 ease-in-out;
+        }
+
+        &:hover {
+            &::before {
+                border-color: transparent transparent transparent #0c0d0d;
+            }
+
+            &::after {
+                border-color: transparent #0c0d0d transparent transparent;
+            }
+        }
+    }
+</style>

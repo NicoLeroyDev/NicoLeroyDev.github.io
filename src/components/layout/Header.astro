@@ -1,8 +1,61 @@
+---
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+
+import LogoNL from '@components/icons/LogoNL.vue';
+import MainMenu from '@components/layout/MainMenu.astro';
+
+const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const t = useTranslations(currentLang);
+---
+
 <header role="banner"
         class="sidebar fixed z-20 left-0 top-0 text-center flex-shrink-0 px-2 py-8 bg-light h-screen w-[110px] mr-[5px]
         -translate-x-[115px] transition duration-300 ease-in-out
         lg:translate-x-0
         dark:bg-dark"
 >
-TOTO
+  <a href={ translatePath('/') } aria-label={ t('nav.backHome') } class="flex">
+    <LogoNL width="30" height="40" class="text-dark dark:text-light mx-auto transition-colors duration-300 ease-in-out" />
+  </a>
+  <MainMenu />
 </header>
+
+<style>
+    @reference "../../styles/tailwind-config.css";
+
+    .sidebar {
+        &::after {
+            content: "";
+            background-image: linear-gradient(
+                0deg,
+                var(--color-blue),
+                var(--color-yellow),
+                var(--color-pink),
+                var(--color-blue),
+                var(--color-yellow),
+                var(--color-pink),
+                var(--color-blue)
+            );
+            background-size: auto 300%;
+            animation: glowing 60s linear infinite;
+            @apply absolute left-full top-0 h-full w-[5px];
+        }
+
+        &.sidebarMenuOpened {
+            @apply translate-x-0;
+        }
+    }
+
+    @keyframes glowing {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 0 300%;
+        }
+        100% {
+            background-position: 0 0;
+        }
+    }
+</style>
