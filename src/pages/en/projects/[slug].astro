@@ -31,9 +31,9 @@ export async function getStaticPaths() {
 <Layout title={ content?.title }>
     <div class="py-8">
         <Image
-            src={ content?.bannerImage }
-            alt={ content?.primaryImageAlt }
-            class="w-full"
+                src={ content?.bannerImage }
+                alt={ content?.primaryImageAlt }
+                class="w-full"
         />
     </div>
     <div class="p-8 pt-0">
@@ -62,9 +62,9 @@ export async function getStaticPaths() {
                 </div>
                 <div class="cta mt-6">
                     <ButtonLink
-                        href={ content?.url }
-                        target="_blank"
-                        label={ t('projectDetail.viewWebsiteButtonLabel') }
+                            href={ content?.url }
+                            target="_blank"
+                            label={ t('projectDetail.viewWebsiteButtonLabel') }
                     />
                 </div>
             </div>
@@ -72,9 +72,9 @@ export async function getStaticPaths() {
         <div class="pb-8 flex items-center">
             <div class="main-image relative flex justify-center">
                 <Image
-                    src={ content?.primaryImage }
-                    alt={ content?.primaryImageAlt }
-                    class="mb-20 w-[80%] z-10 shadow-2xl rounded"
+                        src={ content?.primaryImage }
+                        alt={ content?.primaryImageAlt }
+                        class="mb-20 w-[80%] z-10 shadow-2xl rounded"
                 />
             </div>
         </div>
@@ -83,9 +83,9 @@ export async function getStaticPaths() {
         <div class="pb-8 flex items-center order-2">
             <div class="main-image relative flex justify-center">
                 <Image
-                    src={ content?.secondaryImage }
-                    alt={ content?.secondaryImageAlt }
-                    class="mb-20 w-[80%] z-10 shadow-2xl rounded"
+                        src={ content?.secondaryImage }
+                        alt={ content?.secondaryImageAlt }
+                        class="mb-20 w-[80%] z-10 shadow-2xl rounded"
                 />
             </div>
         </div>
@@ -99,8 +99,8 @@ export async function getStaticPaths() {
     </div>
     <div class="cta p-8 flex justify-center">
         <ButtonLink
-            href={ translatePath('/projects') }
-            label={ t('projectDetail.backToPortfolioButtonLabel') }
+                href={ translatePath('/projects') }
+                label={ t('projectDetail.backToPortfolioButtonLabel') }
         />
     </div>
 </Layout>

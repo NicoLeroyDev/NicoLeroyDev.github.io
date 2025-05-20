@@ -1,7 +1,7 @@
 ---
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
 
-import LogoNL from '@components/icons/LogoNL.vue';
+import LogoNL from '@assets/logo-nl.svg';
 import MainMenu from '@components/layout/MainMenu.astro';
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -22,7 +22,7 @@ const t = useTranslations(currentLang);
 </header>
 
 <style>
-    @reference "../../styles/tailwind-config.css";
+    @reference "@styles/tailwind-config.css";
 
     .sidebar {
         &::after {

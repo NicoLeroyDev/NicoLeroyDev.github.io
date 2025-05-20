@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+import ProjectCard from '@components/projects/ProjectCard.vue';
+
+// Récupérer tous les projets non-brouillons
+const projects = await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Trier par date (plus récent d'abord)
+const sortedProjects = projects.sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<Layout title="Mes projets">
+    <div class="max-w-6xl mx-auto py-12 px-4">
+        <h1 class="text-4xl font-bold mb-8">Mes projets</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sortedProjects.map(project => (
+                <ProjectCard
+                    title={project.data.title}
+                    description={project.data.description}
+                    image={project.data.image}
+                    url={`/projects/${project.slug}`}
+                    tags={project.data.tags || []}
+                    client:load
+                />
+            ))}
+        </div>
+    </div>
+</Layout>

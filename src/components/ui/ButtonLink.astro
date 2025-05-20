@@ -1,0 +1,61 @@
+---
+// Usage: <ButtonLink label="Example" target="_blank" href="https://www.example.com" />
+const { label, href, target } = Astro.props;
+---
+
+<div class="button-link relative inline-block">
+    <span class="border-glow absolute top-[-1px] left-[-1px]"></span>
+    <a href={ href }
+       target={ target }
+       class="w-full relative flex justify-center px-4 py-2 text-center border border-solid transition-colors duration-200 ease-in-out border-dark bg-dark text-light dark:border-light dark:bg-light dark:text-dark hover:bg-light dark:hover:bg-dark hover:text-dark dark:hover:text-light"
+    >
+        { label }
+    </a>
+</div>
+
+<style>
+    @reference "@styles/tailwind-config.css";
+
+    .button-link {
+
+        &:hover,
+        &:focus,
+        &:active {
+
+            .border-glow {
+                @apply opacity-100;
+            }
+        }
+
+        .border-glow {
+            width: calc(100% + 2px);
+            height: calc(100% + 2px);
+            animation: glowing 60s linear infinite;
+            filter: blur(2px);
+            background-size: 300% auto;
+            background-image: linear-gradient(
+                    90deg,
+                    var(--color-blue),
+                    var(--color-yellow),
+                    var(--color-pink),
+                    var(--color-blue),
+                    var(--color-yellow),
+                    var(--color-pink),
+                    var(--color-blue)
+            );
+            @apply opacity-0 transition-opacity duration-200 ease-in-out;
+        }
+    }
+
+    @keyframes glowing {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 300% 0;
+        }
+        100% {
+            background-position: 0 0;
+        }
+    }
+</style>
