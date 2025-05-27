@@ -1,33 +1,31 @@
 ---
 import { languages } from '@i18n/ui';
-import { getRouteFromUrl, useTranslatedPath, getLangFromUrl } from '@i18n/utils';
+import { useTranslatedPath, getLangFromUrl } from '@i18n/utils';
 
 const currentLang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
-const route = getRouteFromUrl(Astro.url);
 
-console.log(Astro.url)
+const currentPath = Astro.url.pathname.replace(/^\/(fr|en)/, '') || '/';
 ---
 
 <ul class="flex">
-    {Object.entries(languages).map(([lang, label]) => {
-        return (
-            <li>
-                <a href={translatePath(`/${route ? route : ''}`)}
-                   class:list={[
-                       'flex relative p-4 uppercase text-xs dark:text-light transition-colors duration-200 ease-in-out',
-                       { 'active': currentLang === lang }
-                   ]}
-                >
-                    { lang }
-                </a>
-            </li>
-        )
-    })}
+    {Object.entries(languages).map(([lang]) => (
+        <li>
+            <a
+                href={translatePath(currentPath, lang)}
+                class:list={[
+                    'flex relative p-4 uppercase text-xs dark:text-light transition-colors duration-200 ease-in-out',
+                    {'active': currentLang === lang}
+                ]}
+            >
+                {lang}
+            </a>
+        </li>
+    ))}
 </ul>
 
 <style>
-    @reference "@styles/tailwind-config.css";
+    @reference "../../styles/tailwind-config.css";
 
     .active {
         @apply font-bold;

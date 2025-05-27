@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import ButtonLink from '@components/ui/ButtonLink.astro';
+import { getToolImage } from '@content/tools/imageMap';
+import { getLangFromUrl, getRouteFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+
+const props = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const allTools = await getCollection('tools', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+});
+
+const filteredTools = allTools.filter(tool =>
+    Array.isArray(props.tools) && props.tools.includes(tool.id)
+);
+---
+
+<article class="card-project flex shadow hover:shadow-2xl focus:shadow-2xl rounded overflow-hidden transition-shadow duration-1000 ease-in-out">
+    <div class="flex flex-col dark:bg-dark transition-colors duration-200 ease-in-out">
+        <div class="image overflow-hidden">
+            <Image
+                src={props.image}
+                alt={props.imageAlt}
+                class="w-full"
+            />
+        </div>
+        <div class="content p-2 flex flex-col grow">
+            <div class="top">
+                <h3 class="font-bold text-lg mb-1 dark:text-light transition-colors duration-200 ease-in-out">
+                    {props.title}
+                </h3>
+                <p class="mb-4 dark:text-light transition-colors duration-200 ease-in-out">
+                    {props.description}
+                </p>
+                <div class="tools">
+                    <p class="text-xs font-bold mb-1 dark:text-light transition-colors duration-200 ease-in-out">
+                        { t('tools.label') }
+                    </p>
+                    <ul class="flex flex-wrap gap-2">
+                        {filteredTools.map(tool =>
+                            <li class="flex h-[24px] w-[24px] border border-solid border-dark bg-white dark:bg-light transition-colors duration-200 ease-out">
+                                <a title={tool?.label}
+                                   href={tool?.data?.url}
+                                   class="flex justify-center items-center p-1 w-full h-full"
+                                   target="_blank"
+                                >
+                                    <Image src={getToolImage(tool.id)} alt={tool.data.label} />
+                                </a>
+                            </li>
+                        )}
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom mt-auto">
+                <div class="cta mt-4">
+                    <ButtonLink
+                        class="w-full"
+                        type="dark"
+                        href={props.url}
+                        label={ t('projectCard.buttonLabel') }
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<style>
+    @reference "@styles/tailwind-config.css";
+
+    .card-project {
+
+        &:hover {
+
+            .card-img {
+                @apply grayscale-0 scale-110;
+            }
+        }
+
+        .card-img {
+            @apply lg:grayscale scale-105;
+        }
+    }
+</style>

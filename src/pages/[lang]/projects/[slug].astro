@@ -15,25 +15,33 @@ const t = useTranslations(currentLang);
 const projectModule = await import(`@content/projects/${slug}.data.ts`);
 const content = projectModule.getProjectData(currentLang);
 
-// Générer les routes pour chaque projet
+// Generate route for each project
 export async function getStaticPaths() {
     const projects = await getCollection('projects', ({ data }) => {
         return import.meta.env.PROD ? !data.draft : true;
     });
 
-    return projects.map(project => ({
-        params: { slug: project.slug },
-        props: { project },
-    }));
+    const languages = ['fr', 'en'];
+
+    return languages.flatMap(lang => projects.map(project => ({
+        params: {
+            lang,
+            slug: project.slug,
+        },
+        props: {
+            lang,
+            project,
+        },
+    })));
 }
 ---
 
 <Layout title={ content?.title }>
     <div class="py-8">
         <Image
-                src={ content?.bannerImage }
-                alt={ content?.primaryImageAlt }
-                class="w-full"
+            src={ content?.bannerImage }
+            alt={ content?.primaryImageAlt }
+            class="w-full"
         />
     </div>
     <div class="p-8 pt-0">
@@ -62,9 +70,10 @@ export async function getStaticPaths() {
                 </div>
                 <div class="cta mt-6">
                     <ButtonLink
-                            href={ content?.url }
-                            target="_blank"
-                            label={ t('projectDetail.viewWebsiteButtonLabel') }
+                        href={ content?.url }
+                        type="dark"
+                        target="_blank"
+                        label={ t('projectDetail.viewWebsiteButtonLabel') }
                     />
                 </div>
             </div>
@@ -99,8 +108,9 @@ export async function getStaticPaths() {
     </div>
     <div class="cta p-8 flex justify-center">
         <ButtonLink
-                href={ translatePath('/projects') }
-                label={ t('projectDetail.backToPortfolioButtonLabel') }
+            href={ translatePath('/projects') }
+            label={ t('projectDetail.backToPortfolioButtonLabel') }
+            type="dark"
         />
     </div>
 </Layout>

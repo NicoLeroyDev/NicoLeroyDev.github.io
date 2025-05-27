@@ -1,15 +1,21 @@
 ---
-// Usage: <ButtonLink label="Example" target="_blank" href="https://www.example.com" />
-const { label, href, target } = Astro.props;
+// Usage: <ButtonLink type="dark" label="Example" target="_blank" href="https://www.example.com" />
+const props = Astro.props;
 ---
 
-<div class="button-link relative inline-block">
+<div class:list={['button-link', 'relative', 'inline-block', props.class]}>
     <span class="border-glow absolute top-[-1px] left-[-1px]"></span>
-    <a href={ href }
-       target={ target }
-       class="w-full relative flex justify-center px-4 py-2 text-center border border-solid transition-colors duration-200 ease-in-out border-dark bg-dark text-light dark:border-light dark:bg-light dark:text-dark hover:bg-light dark:hover:bg-dark hover:text-dark dark:hover:text-light"
+    <a href={ props.href }
+       target={ props.target }
+       class:list={[
+           'w-full relative flex justify-center px-4 py-2 text-center border border-solid transition-colors duration-200 ease-in-out',
+           {'border-dark bg-dark text-light dark:border-light dark:bg-light dark:text-dark hover:bg-light dark:hover:bg-dark hover:text-dark dark:hover:text-light': props.type === 'dark'},
+           {'border-light bg-light text-dark dark:border-dark dark:bg-dark dark:text-light hover:bg-dark dark:hover:bg-light hover:text-light dark:hover:text-dark': props.type === 'light'},
+           {'border-dark bg-light text-dark dark:border-light dark:bg-dark dark:text-light hover:bg-dark dark:hover:bg-light hover:text-light dark:hover:text-dark': props.type === 'outlineDark'},
+           {'border-light bg-dark text-light dark:border-dark dark:bg-light dark:text-dark hover:bg-light dark:hover:bg-dark hover:text-dark dark:hover:text-light': props.type === 'outlineLight'},
+       ]}
     >
-        { label }
+        { props.label }
     </a>
 </div>
 

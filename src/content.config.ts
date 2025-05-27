@@ -9,6 +9,18 @@ const projectsCollection = defineCollection({
     }),
 });
 
+const toolsCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        label: z.string(),
+        rating: z.number(),
+        url: z.string(),
+        category: z.string(),
+        draft: z.boolean().optional().default(false),
+    }),
+});
+
 export const collections = {
     'projects': projectsCollection,
+    'tools': toolsCollection,
 };

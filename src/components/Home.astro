@@ -1,10 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
-
 import profilePicture from '@assets/nicolas-leroy-pro.jpg';
-
 import PageTitle from '@components/layout/PageTitle.astro';
+
 
 const currentLang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
@@ -17,8 +16,8 @@ const t = useTranslations(currentLang);
 
 <!-- ToDo -->
 <div class="min-h-screen flex flex-col items-center justify-center p-4">
-    <Image src={ profilePicture } class="w-64 h-64 rounded-full object-cover mb-8" alt={ t('home.profilePic') } />
-    <h1 class="text-3xl font-bold text-gray-800">
-        { t('home.greeting') }
-    </h1>
+    <!--<Image src={ profilePicture } class="w-64 h-64 rounded-full object-cover mb-8" alt={ t('home.profilePic') } />-->
+    <!--<h1 class="text-3xl font-bold text-gray-800">-->
+    <!--    { t('home.greeting') }-->
+    <!--</h1>-->
 </div>

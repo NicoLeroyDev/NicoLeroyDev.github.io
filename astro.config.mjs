@@ -24,7 +24,8 @@ export default defineConfig({
         '@layouts': new URL('./src/layouts', import.meta.url).pathname,
         '@pages': new URL('./src/pages', import.meta.url).pathname,
         '@styles': new URL('./src/styles', import.meta.url).pathname,
-        '@types': new URL('./src/types', import.meta.url).pathname
+        '@types': new URL('./src/types', import.meta.url).pathname,
+        '@utils': new URL('./src/utils', import.meta.url).pathname
       }
     }
   },
