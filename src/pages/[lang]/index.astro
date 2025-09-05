@@ -2,14 +2,10 @@
 import { getCollection } from 'astro:content';
 import Home from '@components/Home.astro';
 import Layout from '@layouts/Layout.astro';
+import { getLangStaticPaths } from '@utils/useRoutes';
 
 export async function getStaticPaths() {
-	const languages = ['fr', 'en'];
-
-	return languages.map(lang => ({
-		params: { lang },
-		props: { lang },
-	}));
+	return getLangStaticPaths();
 }
 ---
 

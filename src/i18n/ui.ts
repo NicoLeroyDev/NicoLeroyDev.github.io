@@ -6,6 +6,15 @@ export const languages = {
 export const defaultLang = 'fr';
 export const showDefaultLang = true;
 
+export const routes = {
+    fr: {
+        projects: 'projets',
+    },
+    en: {
+        projects: 'projects',
+    },
+}
+
 export const ui = {
     fr: {
         'seo.baseTitleTag' : 'Nicolas Leroy, Développeur Web Frontend',
