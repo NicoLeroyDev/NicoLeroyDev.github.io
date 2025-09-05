@@ -3,7 +3,10 @@ import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils'
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
+import ToolLink from '@components/tools/ToolLink.astro'
 import ButtonLink from '@components/ui/ButtonLink.astro';
+import { getCollectionStaticPaths } from '@utils/useRoutes';
+import { getAllTools, filterTools } from '@utils/useTools';
 
 const { project } = Astro.props;
 
@@ -17,23 +20,11 @@ const content = projectModule.getProjectData(currentLang);
 
 // Generate route for each project
 export async function getStaticPaths() {
-    const projects = await getCollection('projects', ({ data }) => {
-        return import.meta.env.PROD ? !data.draft : true;
-    });
-
-    const languages = ['fr', 'en'];
-
-    return languages.flatMap(lang => projects.map(project => ({
-        params: {
-            lang,
-            slug: project.slug,
-        },
-        props: {
-            lang,
-            project,
-        },
-    })));
+    return getCollectionStaticPaths('projects');
 }
+
+const allTools = await getAllTools();
+const filteredTools = filterTools(allTools, content.tools);
 ---
 
 <Layout title={ content?.title }>
@@ -64,9 +55,16 @@ export async function getStaticPaths() {
                     <p class="mb-1 text-xs font-bold dark:text-light transition-colors duration-200 ease-in-out">
                         { t('projectDetail.toolsNotice') }
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        [ToDo] Faire les icones
-                    </div>
+                    <ul class="flex flex-wrap gap-2">
+                        {filteredTools.map(tool =>
+                            <li class="flex h-[24px] w-[24px] border border-solid border-dark bg-white dark:bg-light transition-colors duration-200 ease-out">
+                                <ToolLink tool={ tool }
+                                          target="_blank"
+                                          classNames="flex w-full h-full p-1"
+                                />
+                            </li>
+                        )}
+                    </ul>
                 </div>
                 <div class="cta mt-6">
                     <ButtonLink

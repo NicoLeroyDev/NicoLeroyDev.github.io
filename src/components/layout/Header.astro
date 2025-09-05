@@ -38,7 +38,7 @@ const t = useTranslations(currentLang);
                 var(--color-blue)
             );
             background-size: auto 300%;
-            animation: glowing 60s linear infinite;
+            animation: glowing-header 60s linear infinite;
             @apply absolute left-full top-0 h-full w-[5px];
         }
 
@@ -47,7 +47,7 @@ const t = useTranslations(currentLang);
         }
     }
 
-    @keyframes glowing {
+    @keyframes glowing-header {
         0% {
             background-position: 0 0;
         }

@@ -5,14 +5,10 @@ import ProjectCard from '@components/projects/ProjectCard.astro';
 import ContactLink from '@components/sections/ContactLink.astro';
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
 import Layout from '@layouts/Layout.astro';
+import { getCollectionStaticPaths } from '@utils/useRoutes';
 
 export async function getStaticPaths() {
-    const languages = ['fr', 'en'];
-
-    return languages.map(lang => ({
-        params: { lang },
-        props: { lang },
-    }));
+    return getCollectionStaticPaths('projects');
 }
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -54,6 +50,7 @@ const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`
         <div class="projects-wrapper grid sm:grid-cols-2 xl:grid-cols-4 gap-8">
             {sortedProjects.map(project => (
                 <ProjectCard
+                    slug={project?.content?.slug}
                     title={project?.content?.title}
                     description={project?.content?.cardDescription}
                     image={project?.content?.cardImage}

@@ -29,6 +29,7 @@ export function getProjectData(lang: string) {
     }
 
     const textsFr: {
+        slug: string,
         title: string,
         url: string,
         cardDescription: string,
@@ -39,6 +40,7 @@ export function getProjectData(lang: string) {
         primaryImageAlt: string,
         secondaryImageAlt: string,
     } = {
+        slug: 'project-2',
         title: 'Project 2',
         url: 'https://www.rejospices.be/fr/',
         cardDescription: 'Site e-commerce PrestaShop pour Rejo, une marque du Groupe Solina',
@@ -51,6 +53,7 @@ export function getProjectData(lang: string) {
     }
 
     const textsEn: {
+        slug: string,
         title: string,
         url: string,
         cardDescription: string,
@@ -61,6 +64,7 @@ export function getProjectData(lang: string) {
         primaryImageAlt: string,
         secondaryImageAlt: string,
     } = {
+        slug: 'project-2',
         title: 'Project 2',
         url: 'https://www.rejospices.be/fr/',
         cardDescription: 'PrestaShop e-commerce website for Rejo, a brand of Solina Group',

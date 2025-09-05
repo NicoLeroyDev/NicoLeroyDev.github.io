@@ -1,21 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import ToolLink from '@components/tools/ToolLink.astro'
 import ButtonLink from '@components/ui/ButtonLink.astro';
-import { getToolImage } from '@content/tools/imageMap';
 import { getLangFromUrl, getRouteFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+import { getProjectUrl } from '@utils/useRoutes';
+import { getAllTools, filterTools } from '@utils/useTools';
 
 const props = Astro.props;
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-const allTools = await getCollection('tools', ({ data }) => {
-    return import.meta.env.PROD ? !data.draft : true;
-});
-
-const filteredTools = allTools.filter(tool =>
-    Array.isArray(props.tools) && props.tools.includes(tool.id)
-);
+const allTools = await getAllTools();
+const filteredTools = filterTools(allTools, props.tools);
 ---
 
 <article class="card-project flex shadow hover:shadow-2xl focus:shadow-2xl rounded overflow-hidden transition-shadow duration-1000 ease-in-out">
@@ -24,7 +20,7 @@ const filteredTools = allTools.filter(tool =>
             <Image
                 src={props.image}
                 alt={props.imageAlt}
-                class="w-full"
+                class="card-img transition-all duration-1000 ease-in-out w-full"
             />
         </div>
         <div class="content p-2 flex flex-col grow">
@@ -42,13 +38,10 @@ const filteredTools = allTools.filter(tool =>
                     <ul class="flex flex-wrap gap-2">
                         {filteredTools.map(tool =>
                             <li class="flex h-[24px] w-[24px] border border-solid border-dark bg-white dark:bg-light transition-colors duration-200 ease-out">
-                                <a title={tool?.label}
-                                   href={tool?.data?.url}
-                                   class="flex justify-center items-center p-1 w-full h-full"
-                                   target="_blank"
-                                >
-                                    <Image src={getToolImage(tool.id)} alt={tool.data.label} />
-                                </a>
+                                <ToolLink tool={ tool }
+                                          target="_blank"
+                                          classNames="flex justify-center items-center p-1 w-full h-full"
+                                />
                             </li>
                         )}
                     </ul>
@@ -59,7 +52,7 @@ const filteredTools = allTools.filter(tool =>
                     <ButtonLink
                         class="w-full"
                         type="dark"
-                        href={props.url}
+                        href={ getProjectUrl(currentLang, props.slug) }
                         label={ t('projectCard.buttonLabel') }
                     />
                 </div>
