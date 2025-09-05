@@ -1,0 +1,22 @@
+---
+import Layout from '@layouts/Layout.astro';
+import PageTitle from '@components/layout/PageTitle.astro';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { getLangStaticPaths } from '@utils/useRoutes';
+
+export async function getStaticPaths() {
+  return getLangStaticPaths();
+}
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const pageTitle = `${t('seo.baseTitleTag')} | ${t('cv.titleTag')}`;
+---
+
+<Layout title={pageTitle}>
+  <PageTitle title={ t('cv.pageTitle') } subtitle={ t('cv.subtitle') } />
+  <div class="p-8 pt-0">
+    <!-- TODO: render skills, experiences, diplomas -->
+    <p class="dark:text-light transition-colors duration-200 ease-in-out">Page en construction.</p>
+  </div>
+</Layout>

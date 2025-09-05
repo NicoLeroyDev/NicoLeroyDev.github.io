@@ -9,9 +9,13 @@ export const showDefaultLang = true;
 export const routes = {
     fr: {
         projects: 'projets',
+        cv: 'cv',
+        contact: 'contact',
     },
     en: {
         projects: 'projects',
+        cv: 'cv',
+        contact: 'contact',
     },
 }
 
@@ -38,6 +42,16 @@ export const ui = {
         'projectCard.buttonLabel': 'Voir plus',
         'sectionContactLink.sectionTitle': 'Contactez-moi',
         'sectionContactLink.buttonLabel': 'Aller à la page contact',
+        'contact.titleTag': 'Contact',
+        'contact.pageTitle': 'Contact',
+        'contact.subtitle': 'Envoyez-moi un message via ce formulaire.',
+        'contact.form.name': 'Votre nom',
+        'contact.form.email': 'Votre e-mail',
+        'contact.form.message': 'Votre message',
+        'contact.form.submit': 'Envoyer',
+        'cv.titleTag': 'CV',
+        'cv.pageTitle': 'CV',
+        'cv.subtitle': 'Compétences, expériences, formations',
     },
     en: {
         'seo.baseTitleTag' : 'Nicolas Leroy, Frontend Web Developer',
@@ -61,5 +75,15 @@ export const ui = {
         'projectCard.buttonLabel': 'See more',
         'sectionContactLink.sectionTitle': 'Contact me',
         'sectionContactLink.buttonLabel': 'Go to the contact page',
+        'contact.titleTag': 'Contact',
+        'contact.pageTitle': 'Contact',
+        'contact.subtitle': 'Send me a message with this form.',
+        'contact.form.name': 'Your name',
+        'contact.form.email': 'Your email',
+        'contact.form.message': 'Your message',
+        'contact.form.submit': 'Send',
+        'cv.titleTag': 'Resume',
+        'cv.pageTitle': 'Resume',
+        'cv.subtitle': 'Skills, experiences, education',
     }
 };

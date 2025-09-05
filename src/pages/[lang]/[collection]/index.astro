@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import PageTitle from '@components/layout/PageTitle.astro';
 import ProjectCard from '@components/projects/ProjectCard.astro';
 import ContactLink from '@components/sections/ContactLink.astro';
-import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import Layout from '@layouts/Layout.astro';
 import { getCollectionStaticPaths } from '@utils/useRoutes';
 
@@ -12,7 +12,6 @@ export async function getStaticPaths() {
 }
 
 const currentLang = getLangFromUrl(Astro.url);
-const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
 
 // Get non-draft projects
@@ -55,7 +54,6 @@ const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`
                     description={project?.content?.cardDescription}
                     image={project?.content?.cardImage}
                     imageAlt={project?.content?.cardImageAlt}
-                    url={translatePath(`/${project?.collection}/${project?.slug}`)}
                     tools={project?.content?.tools}
                 />
             ))}

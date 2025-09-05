@@ -1,8 +1,9 @@
 ---
 import ButtonLink from '@components/ui/ButtonLink.astro';
-import { getLangFromUrl, getRouteFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
 
 const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
 ---
 
@@ -13,7 +14,7 @@ const t = useTranslations(currentLang);
 </div>
 <div class="flex flex-wrap justify-center gap-4">
     <ButtonLink
-        href=$route('contact')
+        href={ translatePath('/contact') }
         type="dark"
         label={ t('sectionContactLink.buttonLabel') }
     />

@@ -99,7 +99,7 @@ const filteredTools = filterTools(allTools, content.tools);
         <div class="pb-8 pr-8 pt-0 pl-8 md:pl-0 order-1 md:order-3">
             <div class="flex flex-col justify-center h-full">
                 <div class="wysiwyg dark:text-light transition-colors duration-200 ease-in-out">
-                    { content?.outroduction }
+                    <Fragment set:html={ content?.outroduction } />
                 </div>
             </div>
         </div>

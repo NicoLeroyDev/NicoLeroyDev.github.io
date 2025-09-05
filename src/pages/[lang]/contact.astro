@@ -1,0 +1,40 @@
+---
+import Layout from '@layouts/Layout.astro';
+import PageTitle from '@components/layout/PageTitle.astro';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { getLangStaticPaths } from '@utils/useRoutes';
+
+export async function getStaticPaths() {
+  return getLangStaticPaths();
+}
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const pageTitle = `${t('seo.baseTitleTag')} | ${t('contact.titleTag')}`;
+---
+
+<Layout title={pageTitle}>
+  <PageTitle title={ t('contact.pageTitle') } subtitle={ t('contact.subtitle') } />
+
+  <div class="p-8 pt-0">
+    <form class="max-w-2xl mx-auto flex flex-col gap-4" action={`mailto:${import.meta.env.PUBLIC_CONTACT_EMAIL}`} method="post" encType="text/plain">
+      <div class="flex flex-col gap-1">
+        <label for="name" class="font-medium dark:text-light transition-colors duration-200 ease-in-out">{ t('contact.form.name') }</label>
+        <input id="name" name="name" type="text" required class="border border-solid border-dark dark:border-light bg-white dark:bg-dark text-dark dark:text-light rounded px-3 py-2" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="email" class="font-medium dark:text-light transition-colors duration-200 ease-in-out">{ t('contact.form.email') }</label>
+        <input id="email" name="email" type="email" required class="border border-solid border-dark dark:border-light bg-white dark:bg-dark text-dark dark:text-light rounded px-3 py-2" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="message" class="font-medium dark:text-light transition-colors duration-200 ease-in-out">{ t('contact.form.message') }</label>
+        <textarea id="message" name="message" rows="6" required class="border border-solid border-dark dark:border-light bg-white dark:bg-dark text-dark dark:text-light rounded px-3 py-2"></textarea>
+      </div>
+      <div>
+        <button type="submit" class="px-4 py-2 border border-solid border-dark bg-dark text-light dark:border-light dark:bg-light dark:text-dark rounded">
+          { t('contact.form.submit') }
+        </button>
+      </div>
+    </form>
+  </div>
+</Layout>
