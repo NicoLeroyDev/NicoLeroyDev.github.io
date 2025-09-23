@@ -29,7 +29,7 @@ const { title } = Astro.props;
 		<div class="app-layout transition-colors duration-200 ease-in-out">
 			<div class="wrapper flex bg-white dark:bg-black transition-colors duration-200 ease-in-out">
 				<Header />
-				<div class="main-wrapper flex flex-col w-full min-h-[100vh] lg:pl-[115px] transition-all duration-200 ease-in-out">
+				<div class="js-main-wrapper main-wrapper flex flex-col w-full min-h-[100vh] lg:pl-[115px] transition-all duration-200 ease-in-out">
 					<SubHeader />
 					<main id="site-main" class="main">
 						<slot />
@@ -40,3 +40,20 @@ const { title } = Astro.props;
 		</div>
 	</body>
 </html>
+
+<style>
+    @reference "@styles/tailwind-config.css";
+    .app-layout {
+
+        &.overflowHidden {
+            @apply overflow-hidden
+        }
+
+        .main-wrapper {
+
+            &.mainMenuOpened {
+                @apply translate-x-[115px];
+            }
+        }
+    }
+</style>

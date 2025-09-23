@@ -1,0 +1,105 @@
+---
+---
+
+<div class="burger mr-auto lg:hidden" x-data="burger()">
+    <button class="flex justify-center items-center relative z-30 -left-[14px] w-[48px] h-[48px]"
+            x-on:click="toggle()"
+            x-on:resize.window.throttle.50ms="onResize()"
+            :class="{ 'menuOpened': showMenu }"
+    >
+    <span class="icon-wrapper">
+      <span class="top"></span>
+      <span class="middle"></span>
+      <span class="bottom"></span>
+    </span>
+    </button>
+
+    <div x-show="showMenu"
+         x-on:click="close()"
+         x-transition.opacity
+         class="overlay fixed z-20 w-full h-full top-0 left-0 bg-white opacity-75 dark:bg-black"></div>
+</div>
+
+<script is:inline>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('burger', () => ({
+            showMenu: false,
+            mediaQuery: window.matchMedia('(max-width: 1023px)'),
+
+            init() {
+                // Ensure correct initial state on mount
+                this.updateSidebarClass(this.showMenu);
+
+                // Keep header class in sync with showMenu changes
+                this.$watch('showMenu', (value) => this.updateSidebarClass(value));
+            },
+
+
+            onResize() {
+                if (this.mediaQuery && !this.mediaQuery.matches) {
+                    if (this.showMenu) {
+                        this.showMenu = false;
+                    }
+
+                    this.updateSidebarClass(false);
+                }
+            },
+
+            toggle() {
+                this.showMenu = !this.showMenu;
+            },
+
+            close() {
+                this.showMenu = false;
+            },
+
+            updateSidebarClass(isOpen) {
+                const { body } = document;
+                const header = document.querySelector('.js-header-sidebar');
+                const mainWrapper = document.querySelector('.js-main-wrapper');
+
+                if (body) body.classList.toggle('overflow-hidden', !!isOpen);
+                if (header) header.classList.toggle('sidebarMenuOpened', !!isOpen);
+                if (mainWrapper) mainWrapper.classList.toggle('mainMenuOpened', !!isOpen);
+            },
+        }));
+    });
+</script>
+
+<style>
+    @reference "@styles/tailwind-config.css";
+
+    button {
+        &.menuOpened {
+            .icon-wrapper {
+                @apply block rotate-90;
+            }
+
+            .middle {
+                @apply opacity-0;
+            }
+
+            .top {
+                @apply rotate-45 translate-y-[6px];
+            }
+
+            .bottom {
+                @apply -rotate-45 -translate-y-[6px];
+            }
+        }
+
+        .icon-wrapper {
+            @apply transition-transform duration-200 ease-in-out;
+        }
+
+        .top,
+        .middle,
+        .bottom {
+            @apply block w-[20px] h-[2px] bg-dark dark:bg-light transition duration-200 ease-in-out;
+        }
+
+        .middle {
+            @apply my-1;
+        }
+    }
+</style>
