@@ -1,7 +1,7 @@
 import tailwindcss from '@assets/tools/tailwindcss.svg';
 import vuejs from '@assets/tools/vuejs.svg';
 
-const imageMap: Record<string, ImageMetadata> = {
+const imageMap: { tailwindcss: {}; vuejs: {} } = {
     tailwindcss,
     vuejs,
 };

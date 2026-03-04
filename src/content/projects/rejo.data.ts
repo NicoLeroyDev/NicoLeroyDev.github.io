@@ -6,27 +6,19 @@ import secondaryImage from '@assets/projects/rejo/secondary.jpg';
 export function getProjectData(lang: string) {
   let content: object = {};
 
-  const images: {
-    bannerImage: string;
-    cardImage: string;
-    primaryImage: string;
-    secondaryImage: string;
-  } = {
+  const images: { bannerImage: {}; cardImage: {}; primaryImage: {}; secondaryImage: {} } = {
     bannerImage,
     cardImage,
     primaryImage,
     secondaryImage,
   };
 
-  const tools: {
-    tools: [
-      string
-    ]
-  } = {
+  const technicalInfo: { tools: string[], experience: string } = {
     tools: [
       'tailwindcss',
       'vuejs',
-    ]
+    ],
+    experience: 'novius',
   }
 
   const textsFr: {
@@ -79,7 +71,7 @@ export function getProjectData(lang: string) {
 
   content = {
     ...images,
-    ...tools,
+    ...technicalInfo,
   }
 
   content = lang === 'en' ? Object.assign(content, textsEn) : Object.assign(content, textsFr);

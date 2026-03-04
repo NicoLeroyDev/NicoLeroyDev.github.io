@@ -1,9 +1,9 @@
-import tailwindcss from '@assets/tools/tailwindcss.svg';
-import vuejs from '@assets/tools/vuejs.svg';
+import novius from '@assets/experiences/novius.svg';
+import synolia from '@assets/experiences/synolia.png';
 
-const imageMap: Record<string, ImageMetadata> = {
-    tailwindcss,
-    vuejs,
+const imageMap: { novius: {}; synolia: {} } = {
+    novius,
+    synolia,
 };
 
 export function getExperienceImage(experienceId: string): ImageMetadata | undefined {

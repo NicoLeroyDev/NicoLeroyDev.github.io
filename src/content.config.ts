@@ -16,6 +16,7 @@ const experiencesCollection = defineCollection({
         jobTitle: z.string(),
         dateStart: z.string(),
         dateEnd: z.string().optional(),
+        website: z.string().url().optional(),
     }),
 });
 
