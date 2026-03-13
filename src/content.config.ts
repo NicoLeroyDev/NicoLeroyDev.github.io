@@ -10,13 +10,9 @@ const projectsCollection = defineCollection({
 });
 
 const experiencesCollection = defineCollection({
-    type: 'data',
     schema: z.object({
         enterpriseName: z.string(),
-        jobTitle: z.string(),
-        dateStart: z.string(),
-        dateEnd: z.string().optional(),
-        website: z.string().url().optional(),
+        sort: z.number(),
     }),
 });
 
@@ -31,8 +27,17 @@ const toolsCollection = defineCollection({
     }),
 });
 
+const skillsCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        title: z.string(),
+        skillsList: z.array(z.string()),
+    }),
+});
+
 export const collections = {
     'projects': projectsCollection,
     'experiences': experiencesCollection,
     'tools': toolsCollection,
+    'skills': skillsCollection,
 };

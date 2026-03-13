@@ -1,3 +1,6 @@
 @import "./tailwind-config.css";
 
+@import "./layers/utilities.css";
+
+@import "./components/layout.css";
 @import "./components/language-picker.css";
