@@ -35,9 +35,17 @@ const skillsCollection = defineCollection({
     }),
 });
 
+const educationCollection = defineCollection({
+    type: 'data',
+    schema: z.object({
+        title: z.string(),
+    }),
+});
+
 export const collections = {
     'projects': projectsCollection,
     'experiences': experiencesCollection,
     'tools': toolsCollection,
     'skills': skillsCollection,
+    'education': educationCollection,
 };

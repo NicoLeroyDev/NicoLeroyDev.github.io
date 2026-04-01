@@ -55,6 +55,10 @@ export const ui = {
         'cv.subtitle': 'Toutes les informations que vous trouverez sur cette page sont téléchargeables sur mon CV au format pdf.',
         'cv.skills.title': 'Compétences',
         'cv.experiences.title': 'Expériences',
+        'cv.experiences.current': 'aujourd\'hui',
+        'date.from': 'De',
+        'date.to': 'à',
+        'date.today': 'aujourd\'hui',
     },
     en: {
         'seo.baseTitleTag' : 'Nicolas Leroy, Frontend Web Developer',
@@ -91,5 +95,9 @@ export const ui = {
         'cv.subtitle': 'All the information you will find on this page is downloadable on my resume in pdf format.',
         'cv.skills.title': 'Skills',
         'cv.experiences.title': 'Experiences',
+        'cv.experiences.current': 'today',
+        'date.from': 'From',
+        'date.to': 'to',
+        'date.today': 'today',
     }
 };

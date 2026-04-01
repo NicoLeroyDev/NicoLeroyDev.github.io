@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import { getExperienceImage } from '@content/experiences/imageMap';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { getCollection } from 'astro:content';
+import { getExperiencesData } from '@content/experiences/experiences.data';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const experiences = await getCollection('experiences');
+const experiencesData = getExperiencesData(currentLang);
+
+const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
+---
+<div class="py-8 border-b-2 border-solid border-light dark:border-dark transition-colors duration-200 ease-in-out">
+  <div class="title-area mb-4">
+    <h2 class="text-2xl font-black small-caps dark:text-light transition-colors duration-200 ease-in-out">
+      { t('cv.experiences.title') }
+    </h2>
+  </div>
+  <div class="experiences-wrapper grid gap-6">
+    {sortedExperiences.map((experience: any) => {
+      const data = experiencesData[experience.slug];
+      const image = getExperienceImage(experience.slug);
+
+      if (!data) return null;
+
+      return (
+        <div class="experience-item">
+          <div class="flex">
+            {image && (
+              <div class="logo w-20 h-[68px] mr-4 bg-white border border-solid border-dark flex justify-center items-center p-2">
+                <a href={data.website}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="flex justify-center items-center w-full h-full"
+                >
+                  <Image src={image} alt={experience.data.enterpriseName} class="max-w-full h-auto max-h-full" />
+                </a>
+              </div>
+            )}
+            <div class="text">
+              <h3 class="text-lg font-black small-caps dark:text-light transition-colors duration-200 ease-in-out">
+                {data.position}
+                <span class="pl-1 text-xs font-medium font-variant-normal">
+                  {data.contractType}
+                </span>
+              </h3>
+              <h4 class="font-bold text-sm dark:text-light transition-colors duration-200 ease-in-out">
+                <a href={data.website}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                >
+                  {experience.data.enterpriseName}
+                </a>
+              </h4>
+              <div class="flex items-center text-sm italic dark:text-light transition-colors duration-200 ease-in-out">
+                <span class={`flex mr-1 w-2 h-2 rounded-full ${data.isCurrent ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                {`${t('date.from')} `}
+                <strong class="inline-flex ml-1">{data.startDateString} {t('date.to')} {data.isCurrent ? t('date.today') : data.endDateString}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="experience-description pl-24 mt-4 dark:text-light transition-colors duration-200 ease-in-out">
+            <div class="experience-details dark:text-light transition-colors duration-200 ease-in-out">
+              {data.contents.map((content: any) => (
+                <div class="mb-4">
+                  <h4 class="font-semibold" set:html={content.title} />
+                  <ul class="list-disc list-inside">
+                    {content.listElems.map((item: string) => (
+                      <li set:html={item} />
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>

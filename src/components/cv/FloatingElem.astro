@@ -1,0 +1,9 @@
+---
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+---
+<div class="w-full lg:w-1/3 lg:pl-8 pt-8 lg:pt-0 lg:fixed lg:right-0 lg:top-1/2 lg:-translate-y-1/2">
+  Element flottant
+</div>
