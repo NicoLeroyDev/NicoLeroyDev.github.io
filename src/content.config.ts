@@ -36,9 +36,9 @@ const skillsCollection = defineCollection({
 });
 
 const educationCollection = defineCollection({
-    type: 'data',
     schema: z.object({
         title: z.string(),
+        sort: z.number(),
     }),
 });
 
