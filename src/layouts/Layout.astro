@@ -1,26 +1,60 @@
 ---
-import '../styles/global.css';
+import '@styles/global.css';
+
+import Footer from '@components/layout/Footer.astro';
+import Header from '@components/layout/Header.astro';
+import SubHeader from '@components/layout/SubHeader.astro';
+
+import { getLangFromUrl } from '@i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;500;600;700;900&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<slot />
+		<div class="app-layout transition-colors duration-200 ease-in-out">
+			<div class="wrapper flex bg-white dark:bg-black transition-colors duration-200 ease-in-out">
+				<Header />
+				<div class="js-main-wrapper main-wrapper flex flex-col w-full min-h-[100vh] lg:pl-[115px] transition-all duration-200 ease-in-out">
+					<SubHeader />
+					<main id="site-main" class="main">
+						<slot />
+					</main>
+					<Footer />
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+    @reference "@styles/tailwind-config.css";
+
+    .app-layout {
+
+        &.overflowHidden {
+            @apply overflow-hidden
+        }
+
+        .main-wrapper {
+
+            &.mainMenuOpened {
+                @apply translate-x-[115px];
+            }
+        }
+    }
 </style>

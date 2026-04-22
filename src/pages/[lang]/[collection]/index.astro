@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import PageTitle from '@components/layout/PageTitle.astro';
+import ProjectCard from '@components/projects/ProjectCard.astro';
+import ContactLink from '@components/sections/ContactLink.astro';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import Layout from '@layouts/Layout.astro';
+import { getCollectionStaticPaths } from '@utils/useRoutes';
+
+export async function getStaticPaths() {
+    return getCollectionStaticPaths('projects');
+}
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Get non-draft projects
+const projects = await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Get projects data
+const enrichedProjects = await Promise.all(
+    projects.map(async (project) => {
+        const { slug } = project;
+        const projectModule = await import(`@content/projects/${slug}.data.ts`);
+        const content = projectModule.getProjectData(currentLang);
+
+        return {
+            ...project,
+            content,
+        };
+    })
+);
+
+// Sort by date
+const sortedProjects = enrichedProjects.sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`;
+---
+
+<Layout title={seoPageTitle}>
+    <PageTitle title={ t('projectsIndex.pageTitle') }
+               subtitle={ t('projectsIndex.subtitle') }
+    />
+    <div class="p-8 pt-0">
+        <div class="projects-wrapper grid sm:grid-cols-2 xl:grid-cols-4 gap-8">
+            {sortedProjects.map(project => (
+                <ProjectCard
+                    slug={project?.content?.slug}
+                    title={project?.content?.title}
+                    description={project?.content?.cardDescription}
+                    image={project?.content?.cardImage}
+                    imageAlt={project?.content?.cardImageAlt}
+                    tools={project?.content?.tools}
+                />
+            ))}
+        </div>
+    </div>
+    <div class="p-8 bg-white dark:bg-black transition-colors duration-200 ease-in-out">
+        <ContactLink />
+    </div>
+</Layout>

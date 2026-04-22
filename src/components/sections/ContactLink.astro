@@ -1,0 +1,21 @@
+---
+import ButtonLink from '@components/ui/ButtonLink.astro';
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const t = useTranslations(currentLang);
+---
+
+<div class="title-area mb-6">
+    <h2 class="text-center text-2xl font-black small-caps dark:text-light transition-colors duration-200 ease-in-out">
+        { t('sectionContactLink.sectionTitle') }
+    </h2>
+</div>
+<div class="flex flex-wrap justify-center gap-4">
+    <ButtonLink
+        href={ translatePath('/contact') }
+        type="dark"
+        label={ t('sectionContactLink.buttonLabel') }
+    />
+</div>

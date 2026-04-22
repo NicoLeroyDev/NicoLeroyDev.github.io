@@ -1,0 +1,33 @@
+---
+import MainMenuLink from '@components/layout/MainMenuLink.astro';
+import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const t = useTranslations(currentLang);
+---
+
+<nav class="mt-8">
+    <ul>
+        <li class="flex relative mb-3">
+            <MainMenuLink id="home" href={ translatePath('/', currentLang) }>
+                { t('nav.home') }
+            </MainMenuLink>
+        </li>
+        <li class="flex relative mb-3">
+            <MainMenuLink id="pen" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].projects}` }>
+                { t('nav.portfolio') }
+            </MainMenuLink>
+        </li>
+        <li class="flex relative mb-3">
+            <MainMenuLink id="bag" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].cv}` }>
+                { t('nav.cv') }
+            </MainMenuLink>
+        </li>
+        <li class="flex relative mb-3">
+            <MainMenuLink id="phone" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].contact}` }>
+                { t('nav.contact') }
+            </MainMenuLink>
+        </li>
+    </ul>
+</nav>

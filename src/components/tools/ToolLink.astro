@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import { getToolImage } from '@content/tools/imageMap';
+
+const { tool, target, classNames } = Astro.props;
+---
+
+<a title={tool?.label}
+   href={tool?.data?.url}
+   target={target}
+   class={classNames}
+>
+    <Image src={getToolImage(tool.id)} alt={tool.data.label} />
+</a>

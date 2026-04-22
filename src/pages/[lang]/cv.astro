@@ -1,0 +1,32 @@
+---
+import Layout from '@layouts/Layout.astro';
+import PageTitle from '@components/layout/PageTitle.astro';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { getLangStaticPaths } from '@utils/useRoutes';
+import Skills from '@components/cv/Skills.astro';
+import Experiences from '@components/cv/Experiences.astro';
+import Education from '@components/cv/Education.astro';
+import FloatingElem from '@components/cv/FloatingElem.astro';
+
+export async function getStaticPaths() {
+  return getLangStaticPaths();
+}
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const pageTitle = `${t('seo.baseTitleTag')} | ${t('cv.titleTag')}`;
+---
+
+<Layout title={pageTitle}>
+  <PageTitle title={ t('cv.pageTitle') } subtitle={ t('cv.subtitle') } />
+  <div class="p-8 pt-0">
+    <div class="flex flex-wrap -mx-8">
+      <div class="w-full lg:w-2/3 px-8">
+        <Skills />
+        <Experiences />
+        <Education />
+      </div>
+      <FloatingElem />
+    </div>
+  </div>
+</Layout>

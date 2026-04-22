@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import Home from '@components/Home.astro';
+import Layout from '@layouts/Layout.astro';
+import { getLangStaticPaths } from '@utils/useRoutes';
+
+export async function getStaticPaths() {
+	return getLangStaticPaths();
+}
+---
+
+<Layout>
+	<Home />
+</Layout>
