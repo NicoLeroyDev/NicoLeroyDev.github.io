@@ -45,13 +45,3 @@ export async function getCollectionStaticPaths<T extends keyof typeof import('as
 export function getProjectUrl(lang: Lang, slug: string): string {
     return `/${lang}/${routes[lang].projects}/${slug}`;
 }
-
-// export function getProjectsStaticPaths(projects: any[]) {
-//     return languages.flatMap(lang =>
-//         projects.map(project => ({
-//             params: { lang, slug: project.slug },
-//             props: { lang, project },
-//         }))
-//     );
-// }
-

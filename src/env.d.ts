@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
     readonly PUBLIC_SITE_URL: string;
     readonly PUBLIC_CONTACT_EMAIL: string;
+    readonly RESEND_API_KEY: string;
 }
 
 interface ImportMeta {
