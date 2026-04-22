@@ -7,7 +7,7 @@ import vue from '@astrojs/vue';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://nicoleroydev.github.io',
+  site: 'https://nico-leroy-dev.vercel.app',
   redirects: {
     '/': '/fr/',
   },
