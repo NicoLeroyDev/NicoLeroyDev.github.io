@@ -1,11 +1,11 @@
 ---
 import { languages } from '@i18n/ui';
-import { useTranslatedPath, getLangFromUrl } from '@i18n/utils';
+import { useTranslatedPath, getLangFromUrl, getPathWithoutLang } from '@i18n/utils';
 
 const currentLang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
 
-const currentPath = Astro.url.pathname.replace(/^\/(fr|en)/, '') || '/';
+const currentPath = getPathWithoutLang(Astro.url);
 ---
 
 <ul class="flex">

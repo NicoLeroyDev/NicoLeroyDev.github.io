@@ -10,22 +10,22 @@ const t = useTranslations(currentLang);
 <nav class="mt-8">
     <ul>
         <li class="flex relative mb-3">
-            <MainMenuLink id="home" href={ translatePath('/', currentLang) }>
+            <MainMenuLink id="home" href={ translatePath('/') }>
                 { t('nav.home') }
             </MainMenuLink>
         </li>
         <li class="flex relative mb-3">
-            <MainMenuLink id="pen" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].projects}` }>
+            <MainMenuLink id="pen" href={ translatePath('/projects') }>
                 { t('nav.portfolio') }
             </MainMenuLink>
         </li>
         <li class="flex relative mb-3">
-            <MainMenuLink id="bag" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].cv}` }>
+            <MainMenuLink id="bag" href={ translatePath('/cv') }>
                 { t('nav.cv') }
             </MainMenuLink>
         </li>
         <li class="flex relative mb-3">
-            <MainMenuLink id="phone" href={ `/${currentLang}/${(await import('@i18n/ui')).routes[currentLang].contact}` }>
+            <MainMenuLink id="phone" href={ translatePath('/contact') }>
                 { t('nav.contact') }
             </MainMenuLink>
         </li>
