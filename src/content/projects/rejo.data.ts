@@ -15,6 +15,17 @@ export function getProjectData(lang: string) {
 
   const technicalInfo: { tools: string[], experience: string } = {
     tools: [
+      'html5',
+      'css3',
+      'javascript',
+      'php',
+      'prestashop',
+      'bootstrap',
+      'webpack',
+      'npm',
+      'composer',
+      'git',
+      'gitlab',
       'tailwindcss',
       'vuejs',
     ],
@@ -40,7 +51,7 @@ export function getProjectData(lang: string) {
     introduction: '<p>J\'ai créé le <strong>thème</strong> de ce <strong>PrestaShop</strong> pour le compte de Novius. Il s\'agit d\'un projet assez copieux, car en plus des fonctionnalités natives de PrestaShop, nous avons développé sur-mesure un <strong>espace B2B</strong>, un <strong>catalogue de recettes</strong>, ainsi qu\'un <strong>catalogue de brochures</strong>. Le site intègre le <strong>visual composer de Novius</strong> qui permet d\'administrer le contenu efficacement pour le client, pour les pages ainsi que pour le <strong>blog</strong>. Ce projet est une déclinaison du thème d\'Apollo, mais c\'est un projet plus complexe.</p>',
     outroduction: 'L\'espace B2B est la partie la plus complexe du projet. Elle permet au client B2B d\'acheter les articles rapidement, le catalogue a donc été remanié pour cette cible. Les tableaux contiennent beaucoup de données et doivent pouvoir être utilisables sur tablette',
     bannerImageAlt: 'Bannière de Rejo',
-    cardImageAlt: 'Visuel phare dus site internet de Rejo',
+    cardImageAlt: 'Visuel phare du site internet de Rejo',
     primaryImageAlt: 'Capture d\'écran de la homepage du site internet de Rejo',
     secondaryImageAlt: 'Capture d\'écran de la page shopping list B2B du site internet de Rejo',
   }
