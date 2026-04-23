@@ -66,8 +66,8 @@ export function getProjectData(lang: string) {
         primaryImageAlt: string,
         secondaryImageAlt: string,
     } = {
-        slug: 'project-2',
-        title: 'Project 2',
+        slug: 'amorce',
+        title: 'Amorce',
         url: 'https://amorce.asso.fr/',
         cardDescription: 'Business tool developed on Laravel for Amorce',
         introduction: '<p>I built the front-end of this <strong>Laravel</strong> project for Novius. It is a large project that, in addition to being a <strong>content management tool</strong> for communication, has an <strong>event management system</strong> with a <strong>custom registration process</strong> developed to meet specific needs related to the client\'s workflow.</p>',
