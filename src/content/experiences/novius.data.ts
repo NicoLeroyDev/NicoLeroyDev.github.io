@@ -78,5 +78,8 @@ export function getExperienceData(lang: string) {
         ],
     };
 
-    return lang === 'en' ? contentEn : contentFr;
+    return {
+        ...(lang === 'en' ? contentEn : contentFr),
+        relatedTools
+    };
 }
