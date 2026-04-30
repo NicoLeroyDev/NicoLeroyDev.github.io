@@ -1,15 +1,18 @@
 ---
 import { Image } from 'astro:assets';
+import ToolLink from '@components/tools/ToolLink.astro';
 import { getExperienceImage } from '@content/experiences/imageMap';
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import { getCollection } from 'astro:content';
 import { getExperiencesData } from '@content/experiences/experiences.data';
+import { getAllTools, filterTools } from '@utils/useTools';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
 const experiences = await getCollection('experiences');
 const experiencesData = getExperiencesData(currentLang);
+const allTools = await getAllTools();
 
 const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
 ---
@@ -36,7 +39,7 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
                    rel="noopener noreferrer"
                    class="flex justify-center items-center w-full h-full"
                 >
-                  <Image src={image} alt={experience.data.enterpriseName} class="max-w-full h-auto max-h-full" />
+                  <Image src={image} alt={experience.data.enterpriseName} class="max-w-full h-auto max-h-full" width={80} height={68} />
                 </a>
               </div>
             )}
@@ -72,6 +75,22 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
                       <li set:html={item} />
                     ))}
                   </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="tools-wrapper pl-24">
+            <p class="mb-1 text-xs font-bold dark:text-light transition-colors duration-200 ease-in-out">
+              {`${t('cv.experiences.boundTools')} `}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {filterTools(allTools, data.relatedTools).map((tool) => (
+                <div class="h-7 bg-white border bordedr-solide border-dark">
+                  <ToolLink
+                    tool={tool}
+                    target="_blank"
+                    classNames="flex w-full h-full p-1"
+                  />
                 </div>
               ))}
             </div>
