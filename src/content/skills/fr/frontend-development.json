@@ -1,0 +1,9 @@
+{
+  "title": "Développement front-end",
+  "skillsList": [
+    "Utilisation de <strong>moteurs de templating</strong> (Blade, Twig, Smarty)",
+    "Mise en place et utilisation de <strong>libs et frameworks JS</strong>",
+    "Mise en place et utilisation de <strong>bundlers</strong>",
+    "Utilisation de <strong>gestionnaires de packages</strong>"
+  ]
+}

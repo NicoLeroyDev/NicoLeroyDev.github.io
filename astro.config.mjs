@@ -4,14 +4,17 @@ import alpinejs from '@astrojs/alpinejs';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@astrojs/vue';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
   site: 'https://nico-leroy-dev.vercel.app',
+
   redirects: {
     '/': '/fr/',
   },
+
   vite: {
     plugins: [
         tailwindcss(),
@@ -33,9 +36,12 @@ export default defineConfig({
       }
     }
   },
+
   integrations: [
     alpinejs(),
     mdx(),
     vue()
   ],
+
+  adapter: vercel(),
 });

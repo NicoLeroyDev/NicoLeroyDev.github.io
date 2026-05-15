@@ -1,0 +1,11 @@
+{
+  "title": "Professional skills",
+  "skillsList": [
+    "Writing <strong>clean and maintainable code</strong>",
+    "<strong>Careful structuring</strong> of project folders",
+    "Versioning with <strong>Git</strong>",
+    "Code review",
+    "Consulting tool documentation",
+    "Code <strong>linting</strong>"
+  ]
+}

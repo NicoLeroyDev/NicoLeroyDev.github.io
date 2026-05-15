@@ -14,12 +14,14 @@ export function getLangStaticPaths() {
 export async function getCollectionStaticPaths<T extends keyof typeof import('astro:content').collections>(
     collectionName: T
 ) {
-    const entries = await getCollection(collectionName, ({ data }) => {
+    const allEntries = await getCollection(collectionName, ({ data }) => {
         return import.meta.env.PROD ? !data.draft : true;
     });
 
-    return languages.flatMap((lang: Lang) =>
-        entries.map((entry) => {
+    return languages.flatMap((lang: Lang) => {
+        const langEntries = allEntries.filter(entry => entry.id.startsWith(`${lang}/`));
+
+        return langEntries.map((entry) => {
             const translatedSegment =
                 routes[lang]?.[collectionName] ?? collectionName; // fallback: nom brut
 
@@ -27,15 +29,15 @@ export async function getCollectionStaticPaths<T extends keyof typeof import('as
                 params: {
                     lang,
                     collection: translatedSegment, // correspond au segment traduit
-                    slug: entry.slug,
+                    slug: entry.id.split('/').pop(),
                 },
                 props: {
                     lang,
                     [collectionName.slice(0, -1)]: entry, // ex: "project"
                 },
             };
-        })
-    );
+        });
+    });
 }
 
 /**

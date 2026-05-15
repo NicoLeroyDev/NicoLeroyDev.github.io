@@ -1,0 +1,11 @@
+{
+  "title": "Compétences métier",
+  "skillsList": [
+    "Écriture d'un <strong>code propre et maintenable</strong>",
+    "<strong>Structuration soigneuse</strong> des dossiers des projets",
+    "Versionning avec <strong>Git</strong>",
+    "Review de code",
+    "Consultation de la documentation des outils",
+    "<strong>Linting</strong> de code"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Front-end development",
+  "skillsList": [
+    "Using <strong>templating engines</strong> (Blade, Twig, Smarty)",
+    "Setting up and using <strong>JS libs and frameworks</strong>",
+    "Setting up and using <strong>bundlers</strong>",
+    "Using <strong>package managers</strong>"
+  ]
+}
