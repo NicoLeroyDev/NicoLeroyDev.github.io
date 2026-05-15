@@ -1,10 +1,10 @@
 ---
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
-import { getSkillsData } from '@content/skills/skills.data';
+import { getCollection } from 'astro:content';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
-const skillsData = getSkillsData(currentLang);
+const skillsEntries = await getCollection('skills', ({ id }) => id.startsWith(`${currentLang}/`));
 ---
 <div class="pb-8 border-b-2 border-solid border-light dark:border-dark transition-colors duration-200 ease-in-out">
   <div class="title-area mb-4">
@@ -13,14 +13,14 @@ const skillsData = getSkillsData(currentLang);
     </h2>
   </div>
   <div class="skills-wrapper grid gap-6">
-    {Object.values(skillsData).map((category: any) => (
+    {skillsEntries.map((entry: any) => (
       <div class="skill-item">
         <h3 class="mb-2 text-lg font-black small-caps dark:text-light transition-colors duration-200 ease-in-out">
-          {category.title}
+          {entry.data.title}
         </h3>
         <div class="skill-description dark:text-light transition-colors duration-200 ease-in-out">
           <ul class="list-disc list-inside">
-            {category.skillsList.map((skill: string) => (
+            {entry.data.skillsList.map((skill: string) => (
               <li set:html={skill} />
             ))}
           </ul>

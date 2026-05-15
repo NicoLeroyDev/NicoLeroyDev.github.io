@@ -1,16 +1,13 @@
 ---
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import { getCollection } from 'astro:content';
-import { getEducationsData } from '@content/education/education.data';
 import { getEducationImages } from '@content/education/imageMap';
 import { Image } from 'astro:assets';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-const educations = await getCollection('education');
-const educationsData = getEducationsData(currentLang);
-
+const educations = await getCollection('education', ({ id }) => id.startsWith(`${currentLang}/`));
 const sortedEducations = educations.sort((a, b) => b.data.sort - a.data.sort);
 ---
 <div class="py-8">
@@ -21,17 +18,16 @@ const sortedEducations = educations.sort((a, b) => b.data.sort - a.data.sort);
   </div>
   <div class="diplomas-wrapper grid gap-6">
     {sortedEducations.map((education) => {
-      const data = (educationsData as any)[education.slug];
-      const { logo, badge } = getEducationImages(education.slug);
-
-      if (!data) return null;
+      const { data } = education;
+      const slug = education.id.split('/').pop() || '';
+      const { logo, badge } = getEducationImages(slug);
 
       return (
         <div class="diploma-item">
           <div class="flex">
             {logo && (
               <div class="logo w-20 h-[48px] mr-4 bg-white border border-solid border-dark flex justify-center items-center p-2">
-                <Image src={logo} alt={data.location} class="max-w-full h-auto max-h-full" />
+                <Image src={logo} alt={data.location || ''} class="max-w-full h-auto max-h-full" />
               </div>
             )}
             <div class="text">

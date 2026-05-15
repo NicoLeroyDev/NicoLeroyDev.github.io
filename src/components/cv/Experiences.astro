@@ -4,14 +4,12 @@ import ToolLink from '@components/tools/ToolLink.astro';
 import { getExperienceImage } from '@content/experiences/imageMap';
 import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import { getCollection } from 'astro:content';
-import { getExperiencesData } from '@content/experiences/experiences.data';
 import { getAllTools, filterTools } from '@utils/useTools';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
-const experiences = await getCollection('experiences');
-const experiencesData = getExperiencesData(currentLang);
+const experiences = await getCollection('experiences', ({ id }) => id.startsWith(`${currentLang}/`));
 const allTools = await getAllTools();
 
 const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
@@ -24,10 +22,9 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
   </div>
   <div class="experiences-wrapper grid gap-6">
     {sortedExperiences.map((experience: any) => {
-      const data = experiencesData[experience.slug];
-      const image = getExperienceImage(experience.slug);
-
-      if (!data) return null;
+      const { data } = experience;
+      const slug = experience.id.split('/').pop();
+      const image = getExperienceImage(slug);
 
       return (
         <div class="experience-item">
@@ -39,7 +36,7 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
                    rel="noopener noreferrer"
                    class="flex justify-center items-center w-full h-full"
                 >
-                  <Image src={image} alt={experience.data.enterpriseName} class="max-w-full h-auto max-h-full" width={80} height={68} />
+                  <Image src={image} alt={data.enterpriseName} class="max-w-full h-auto max-h-full" width={80} height={68} />
                 </a>
               </div>
             )}
@@ -55,7 +52,7 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
                    target="_blank"
                    rel="noopener noreferrer"
                 >
-                  {experience.data.enterpriseName}
+                  {data.enterpriseName}
                 </a>
               </h4>
               <div class="flex items-center text-sm italic dark:text-light transition-colors duration-200 ease-in-out">
@@ -67,7 +64,7 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
           </div>
           <div class="experience-description pl-24 mt-4 dark:text-light transition-colors duration-200 ease-in-out">
             <div class="experience-details dark:text-light transition-colors duration-200 ease-in-out">
-              {data.contents.map((content: any) => (
+              {data.contents?.map((content: any) => (
                 <div class="mb-4">
                   <h4 class="font-semibold" set:html={content.title} />
                   <ul class="list-disc list-inside">

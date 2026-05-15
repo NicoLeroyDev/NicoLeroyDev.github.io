@@ -9,15 +9,14 @@ import { getCollectionStaticPaths } from '@utils/useRoutes';
 import { getAllTools, filterTools } from '@utils/useTools';
 import { getExperienceImage } from '@content/experiences/imageMap';
 
-const { project } = Astro.props;
+export const prerender = true;
 
-const { slug } = Astro.params;
+const { project } = Astro.props;
+const content = project.data;
+
 const currentLang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
-
-const projectModule = await import(`@content/projects/${slug}.data.ts`);
-const content = projectModule.getProjectData(currentLang);
 
 // Generate a route for each project
 export async function getStaticPaths() {
@@ -27,7 +26,7 @@ export async function getStaticPaths() {
 const allTools = await getAllTools();
 const filteredTools = filterTools(allTools, content.tools);
 const experienceImage = getExperienceImage(content.experience);
-const experienceEntry = await getEntry('experiences', content.experience);
+const experienceEntry = await getEntry('experiences', `${currentLang}/${content.experience}`);
 const experienceData = experienceEntry?.data;
 ---
 

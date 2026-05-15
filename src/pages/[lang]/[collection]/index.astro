@@ -15,26 +15,14 @@ const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
 // Get non-draft projects
-const projects = await getCollection('projects', ({ data }) => {
-    return import.meta.env.PROD ? !data.draft : true;
+const projects = await getCollection('projects', ({ data, id }) => {
+    const isNotDraft = import.meta.env.PROD ? !data.draft : true;
+    const isCorrectLang = id.startsWith(`${currentLang}/`);
+    return isNotDraft && isCorrectLang;
 });
 
-// Get projects data
-const enrichedProjects = await Promise.all(
-    projects.map(async (project) => {
-        const { slug } = project;
-        const projectModule = await import(`@content/projects/${slug}.data.ts`);
-        const content = projectModule.getProjectData(currentLang);
-
-        return {
-            ...project,
-            content,
-        };
-    })
-);
-
 // Sort by date
-const sortedProjects = enrichedProjects.sort((a, b) =>
+const sortedProjects = projects.sort((a, b) =>
     new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
@@ -49,12 +37,12 @@ const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`
         <div class="projects-wrapper grid sm:grid-cols-2 xl:grid-cols-4 gap-8">
             {sortedProjects.map(project => (
                 <ProjectCard
-                    slug={project?.content?.slug}
-                    title={project?.content?.title}
-                    description={project?.content?.cardDescription}
-                    image={project?.content?.cardImage}
-                    imageAlt={project?.content?.cardImageAlt}
-                    tools={project?.content?.tools}
+                    slug={project.id.split('/').pop()}
+                    title={project.data.title}
+                    description={project.data.cardDescription}
+                    image={project.data.cardImage}
+                    imageAlt={project.data.cardImageAlt}
+                    tools={project.data.tools}
                 />
             ))}
         </div>
