@@ -1,12 +1,11 @@
 ---
 import { Image } from 'astro:assets';
-import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
+import { getLangFromUrl, useTranslations } from '@i18n/utils';
 import profilePicture from '@assets/nicolas-leroy-pro.jpg';
 import PageTitle from '@components/layout/PageTitle.astro';
 
 
 const currentLang = getLangFromUrl(Astro.url);
-const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
 ---
 

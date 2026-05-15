@@ -8,7 +8,7 @@ const projectsCollection = defineCollection({
         title: z.string(),
         date: z.date(),
         draft: z.boolean().optional().default(false),
-        url: z.string().url().optional(),
+        url: z.url().optional(),
         cardDescription: z.string().optional(),
         introduction: z.string().optional(),
         outroduction: z.string().optional(),
@@ -35,7 +35,7 @@ const experiencesCollection = defineCollection({
         isCurrent: z.boolean().optional().default(false),
         startDateString: z.string().optional(),
         endDateString: z.string().optional(),
-        website: z.string().url().optional(),
+        website: z.url().optional(),
         relatedTools: z.array(z.string()).optional(),
         contents: z.array(z.object({
             title: z.string(),

@@ -1,12 +1,26 @@
 import { Resend } from 'resend';
+import { verifyCaptcha } from '@utils/captcha';
 
-export async function POST({ request }) {
+import type { APIRoute } from 'astro';
+
+export const POST: APIRoute = async ({ request }) => {
     try {
         const data = await request.json();
-        const { firstname, lastname, email, subject, message } = data;
+        const { firstname, lastname, email, subject, message, captcha, captchaToken, website } = data;
 
-        if (!firstname || !lastname || !email || !subject || !message) {
+        // Validation du pot de miel (honeypot)
+        if (website) {
+            return new Response(JSON.stringify({ error: 'Bot detected.' }), { status: 400 });
+        }
+
+        // Validation des champs requis
+        if (!firstname || !lastname || !email || !subject || !message || !captcha || !captchaToken) {
             return new Response(JSON.stringify({ error: 'Tous les champs sont requis.' }), { status: 400 });
+        }
+
+        // Validation du captcha
+        if (!verifyCaptcha(captcha, captchaToken)) {
+            return new Response(JSON.stringify({ error: 'Le code de sécurité est incorrect ou a expiré.' }), { status: 400 });
         }
 
         const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -32,6 +46,7 @@ export async function POST({ request }) {
             status: 200
         });
     } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), { status: 500 });
+        const message = e instanceof Error ? e.message : 'Une erreur inconnue est survenue';
+        return new Response(JSON.stringify({ error: message }), { status: 500 });
     }
 }
