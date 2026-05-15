@@ -23,6 +23,7 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9"
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.8.0"
   }
 }

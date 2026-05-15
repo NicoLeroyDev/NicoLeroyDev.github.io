@@ -2,6 +2,7 @@
 import Layout from '@layouts/Layout.astro';
 import PageTitle from '@components/layout/PageTitle.astro';
 import { useTranslations } from '@i18n/utils';
+import { generateCaptcha } from '@utils/captcha';
 
 interface Props {
   lang: 'fr' | 'en';
@@ -10,6 +11,11 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 const pageTitle = `${t('seo.baseTitleTag')} | ${t('contact.titleTag')}`;
+
+const captcha = generateCaptcha();
+const captchaPlaceholder = t('contact.form.captcha.placeholder')
+    .replace('{num1}', captcha.num1.toString())
+    .replace('{num2}', captcha.num2.toString());
 ---
 
 <Layout title={pageTitle}>
@@ -34,6 +40,16 @@ const pageTitle = `${t('seo.baseTitleTag')} | ${t('contact.titleTag')}`;
           <label for="subject" class="text-xs dark:text-light transition-colors duration-200 ease-in-out">{ t('contact.form.subject') }</label>
           <input id="subject" name="subject" type="text" required class="border border-solid border-dark rounded px-2 h-8" />
         </div>
+        <div class="flex flex-col gap-y-1">
+          <label for="captcha" class="text-xs dark:text-light transition-colors duration-200 ease-in-out">{ t('contact.form.captcha.label') }</label>
+          <input id="captcha" name="captcha" type="text" inputmode="numeric" required placeholder={captchaPlaceholder} class="border border-solid border-dark rounded px-2 h-8" />
+          <input type="hidden" name="captchaToken" value={captcha.token} />
+        </div>
+      </div>
+
+      <div class="oh" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
       <div class="grid gap-x-8 my-4">
@@ -83,7 +99,8 @@ const pageTitle = `${t('seo.baseTitleTag')} | ${t('contact.titleTag')}`;
           alert('Message envoyé avec succès !');
           form.reset();
         } else {
-          alert('Une erreur est survenue lors de l\'envoi du message.');
+          const result = await response.json();
+          alert(result.error || 'Une erreur est survenue lors de l\'envoi du message.');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -127,6 +144,15 @@ const pageTitle = `${t('seo.baseTitleTag')} | ${t('contact.titleTag')}`;
       );
       @apply opacity-0 transition-opacity duration-200 ease-in-out;
     }
+  }
+
+  .oh {
+    position: absolute;
+    left: -5000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   @keyframes glowing-button {

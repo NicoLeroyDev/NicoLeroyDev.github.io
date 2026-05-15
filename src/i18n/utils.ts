@@ -22,9 +22,20 @@ export function useTranslatedPath(currentLang: string) {
 
         const pathClean = path.replace(/^\//, '');
         const segments = pathClean.split('/');
+
+        // Identify the base keys for each segment
+        const currentLangRoutes = routes[currentLang as keyof typeof routes];
+        const baseSegments = segments.map(segment => {
+            if (!currentLangRoutes) return segment;
+            const foundKey = Object.keys(currentLangRoutes).find(key =>
+                currentLangRoutes[key as keyof typeof currentLangRoutes] === segment
+            );
+            return foundKey || segment;
+        });
+
         const langRoutes = routes[lang as keyof typeof routes];
 
-        const translatedSegments = segments.map(segment => {
+        const translatedSegments = baseSegments.map(segment => {
             return langRoutes ? (langRoutes[segment as keyof typeof langRoutes] || segment) : segment;
         });
 
