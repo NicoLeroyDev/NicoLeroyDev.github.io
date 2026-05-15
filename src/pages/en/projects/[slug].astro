@@ -9,10 +9,13 @@ export async function getStaticPaths() {
         return id.startsWith('en/');
     });
 
-    return projects.map(project => ({
-        params: {slug: project.id.split('/').pop().replace(/\.[^/.]+$/, "")},
-        props: {project},
-    }));
+    return projects.map(project => {
+        const slug = project.id.split('/').pop()?.replace(/\.[^/.]+$/, "") || "";
+        return {
+            params: { slug },
+            props: { project },
+        };
+    });
 }
 
 const { project } = Astro.props;

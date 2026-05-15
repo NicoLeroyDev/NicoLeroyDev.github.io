@@ -34,16 +34,19 @@ const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`
     />
     <div class="p-8 pt-0">
         <div class="projects-wrapper grid sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            {sortedProjects.map(project => (
-                <ProjectCard
-                    slug={project.id.split('/').pop().replace(/\.[^/.]+$/, "")}
-                    title={project.data.title}
-                    description={project.data.cardDescription}
-                    image={project.data.cardImage}
-                    imageAlt={project.data.cardImageAlt}
-                    tools={project.data.tools}
-                />
-            ))}
+            {sortedProjects.map(project => {
+                const slug = project.id.split('/').pop()?.replace(/\.[^/.]+$/, "") || "";
+                return (
+                    <ProjectCard
+                        slug={slug}
+                        title={project.data.title}
+                        description={project.data.cardDescription}
+                        image={project.data.cardImage}
+                        imageAlt={project.data.cardImageAlt}
+                        tools={project.data.tools}
+                    />
+                );
+            })}
         </div>
     </div>
     <div class="p-8 bg-white dark:bg-black transition-colors duration-200 ease-in-out">
