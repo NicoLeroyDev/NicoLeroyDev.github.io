@@ -11,8 +11,12 @@ export default defineConfig({
   output: 'server',
   site: 'https://nico-leroy-dev.vercel.app',
 
-  redirects: {
-    '/': '/fr/',
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
+    routing: {
+      prefixDefaultLocale: true
+    }
   },
 
   vite: {

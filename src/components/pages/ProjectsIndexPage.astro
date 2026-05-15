@@ -3,21 +3,20 @@ import { getCollection } from 'astro:content';
 import PageTitle from '@components/layout/PageTitle.astro';
 import ProjectCard from '@components/projects/ProjectCard.astro';
 import ContactLink from '@components/sections/ContactLink.astro';
-import { getLangFromUrl, useTranslations } from '@i18n/utils';
+import { useTranslations } from '@i18n/utils';
 import Layout from '@layouts/Layout.astro';
-import { getCollectionStaticPaths } from '@utils/useRoutes';
 
-export async function getStaticPaths() {
-    return getCollectionStaticPaths('projects');
+interface Props {
+    lang: 'fr' | 'en';
 }
 
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 
 // Get non-draft projects
 const projects = await getCollection('projects', ({ data, id }) => {
     const isNotDraft = import.meta.env.PROD ? !data.draft : true;
-    const isCorrectLang = id.startsWith(`${currentLang}/`);
+    const isCorrectLang = id.startsWith(`${lang}/`);
     return isNotDraft && isCorrectLang;
 });
 
@@ -37,7 +36,7 @@ const seoPageTitle = `${t('seo.baseTitleTag')} | ${t('projectsIndex.titleTag')}`
         <div class="projects-wrapper grid sm:grid-cols-2 xl:grid-cols-4 gap-8">
             {sortedProjects.map(project => (
                 <ProjectCard
-                    slug={project.id.split('/').pop()}
+                    slug={project.id.split('/').pop().replace(/\.[^/.]+$/, "")}
                     title={project.data.title}
                     description={project.data.cardDescription}
                     image={project.data.cardImage}

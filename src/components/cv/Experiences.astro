@@ -23,7 +23,7 @@ const sortedExperiences = experiences.sort((a, b) => b.data.sort - a.data.sort);
   <div class="experiences-wrapper grid gap-6">
     {sortedExperiences.map((experience: any) => {
       const { data } = experience;
-      const slug = experience.id.split('/').pop();
+      const slug = experience.id.split('/').pop().replace(/\.[^/.]+$/, "");
       const image = getExperienceImage(slug);
 
       return (

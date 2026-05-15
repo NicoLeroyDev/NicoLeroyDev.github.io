@@ -21,8 +21,14 @@ export function useTranslatedPath(currentLang: string) {
         }
 
         const pathClean = path.replace(/^\//, '');
+        const segments = pathClean.split('/');
         const langRoutes = routes[lang as keyof typeof routes];
-        const translatedPath = langRoutes ? (langRoutes[pathClean as keyof typeof langRoutes] || pathClean) : pathClean;
+
+        const translatedSegments = segments.map(segment => {
+            return langRoutes ? (langRoutes[segment as keyof typeof langRoutes] || segment) : segment;
+        });
+
+        const translatedPath = translatedSegments.join('/');
 
         return !showDefaultLang && lang === defaultLang
             ? `/${translatedPath}`

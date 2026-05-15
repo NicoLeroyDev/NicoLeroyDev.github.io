@@ -3,11 +3,11 @@ import { Image } from 'astro:assets';
 import ToolLink from '@components/tools/ToolLink.astro'
 import ButtonLink from '@components/ui/ButtonLink.astro';
 import { getLangFromUrl, useTranslatedPath, useTranslations } from '@i18n/utils';
-import { getProjectUrl } from '@utils/useRoutes';
 import { getAllTools, filterTools } from '@utils/useTools';
 
 const props = Astro.props;
 const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
 const t = useTranslations(currentLang);
 
 const allTools = await getAllTools();
@@ -52,7 +52,7 @@ const filteredTools = filterTools(allTools, props.tools);
                     <ButtonLink
                         class="w-full"
                         type="dark"
-                        href={ getProjectUrl(currentLang, props.slug) }
+                        href={ translatePath(`/projects/${props.slug}`) }
                         label={ t('projectCard.buttonLabel') }
                     />
                 </div>

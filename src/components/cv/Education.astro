@@ -19,7 +19,7 @@ const sortedEducations = educations.sort((a, b) => b.data.sort - a.data.sort);
   <div class="diplomas-wrapper grid gap-6">
     {sortedEducations.map((education) => {
       const { data } = education;
-      const slug = education.id.split('/').pop() || '';
+      const slug = education.id.split('/').pop()?.replace(/\.[^/.]+$/, "") || '';
       const { logo, badge } = getEducationImages(slug);
 
       return (

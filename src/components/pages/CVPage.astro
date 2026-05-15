@@ -1,19 +1,18 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import PageTitle from '@components/layout/PageTitle.astro';
-import { getLangFromUrl, useTranslations } from '@i18n/utils';
-import { getLangStaticPaths } from '@utils/useRoutes';
+import { useTranslations } from '@i18n/utils';
 import Skills from '@components/cv/Skills.astro';
 import Experiences from '@components/cv/Experiences.astro';
 import Education from '@components/cv/Education.astro';
 import FloatingElem from '@components/cv/FloatingElem.astro';
 
-export async function getStaticPaths() {
-  return getLangStaticPaths();
+interface Props {
+  lang: 'fr' | 'en';
 }
 
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const pageTitle = `${t('seo.baseTitleTag')} | ${t('cv.titleTag')}`;
 ---
 
