@@ -1,12 +1,13 @@
 import { Resend } from 'resend';
-import { verifyCaptcha } from '@utils/captcha';
+import { verifyTurnstile } from '@utils/turnstile';
 
 import type { APIRoute } from 'astro';
 
 export const POST: APIRoute = async ({ request }) => {
     try {
         const data = await request.json();
-        const { firstname, lastname, email, subject, message, captcha, captchaToken, website } = data;
+        const { firstname, lastname, email, subject, message, website } = data;
+        const turnstileToken = data['cf-turnstile-response'];
 
         // Validation du pot de miel (honeypot)
         if (website) {
@@ -14,13 +15,14 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         // Validation des champs requis
-        if (!firstname || !lastname || !email || !subject || !message || !captcha || !captchaToken) {
+        if (!firstname || !lastname || !email || !subject || !message || !turnstileToken) {
             return new Response(JSON.stringify({ error: 'Tous les champs sont requis.' }), { status: 400 });
         }
 
         // Validation du captcha
-        if (!verifyCaptcha(captcha, captchaToken)) {
-            return new Response(JSON.stringify({ error: 'Le code de sécurité est incorrect ou a expiré.' }), { status: 400 });
+        const isCaptchaValid = await verifyTurnstile(turnstileToken);
+        if (!isCaptchaValid) {
+            return new Response(JSON.stringify({ error: 'La vérification de sécurité a échoué.' }), { status: 400 });
         }
 
         const resend = new Resend(import.meta.env.RESEND_API_KEY);
